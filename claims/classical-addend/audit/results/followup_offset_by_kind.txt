@@ -1,0 +1,50 @@
+===== 60d61859 (static pass, qcb_taint_count --static)
+ops.bin             : C:/Users/LIB_LA~1/AppData/Local/Temp/claude/C--Users-lib-laptop-Documents-ecdsafail-challenge/e0644bbd-9749-4c61-8b93-b4a1778a0aa1/scratchpad/run-incumbent/ops.bin
+ops                 : 9133449
+qubits (Q)          : 1151
+classical bits      : 525426
+
+== static ==
+CCX / CCZ emitted   : 1353116 / 5200
+  CCX+CCZ cond class unconditioned-or-const  : 1240569
+  CCX+CCZ cond class OFF                     : 0
+  CCX+CCZ cond class MEAS                    : 117747
+  CCX+CCZ cond class OFF+MEAS                : 0
+  CCX+CCZ with ctrl classical-OFF           : 5
+  CCX+CCZ with ctrl classical-const         : 0
+  CCX+CCZ with ctrl classical-MEAS          : 0
+offset-conditioned X ops (A load/unload) : 2560
+OFF-dependent classical bit/push ops     : 23397
+non-register bits OFF-tainted at end     : 0
+ops whose effective condition is OFF-tainted, by kind:
+  BitInvert: 5683
+  BitStore1: 2877
+  X: 2560
+  PushCondition: 14324
+  PopCondition: 14324
+
+===== 3616dbf2_897dda2b (static pass, qcb_taint_count --static)
+ops.bin             : C:/Users/LIB_LA~1/AppData/Local/Temp/claude/C--Users-lib-laptop-Documents-ecdsafail-challenge/e0644bbd-9749-4c61-8b93-b4a1778a0aa1/scratchpad/run-pingpong/ops.bin
+ops                 : 13586833
+qubits (Q)          : 1321
+classical bits      : 1010987
+
+== static ==
+CCX / CCZ emitted   : 1009049 / 28
+  CCX+CCZ cond class unconditioned-or-const  : 896358
+  CCX+CCZ cond class OFF                     : 0
+  CCX+CCZ cond class MEAS                    : 112719
+  CCX+CCZ cond class OFF+MEAS                : 0
+  CCX+CCZ with ctrl classical-OFF           : 5
+  CCX+CCZ with ctrl classical-const         : 17
+  CCX+CCZ with ctrl classical-MEAS          : 0
+offset-conditioned X ops (A load/unload) : 2560
+OFF-dependent classical bit/push ops     : 23397
+non-register bits OFF-tainted at end     : 0
+ops whose effective condition is OFF-tainted, by kind:
+  BitInvert: 5683
+  BitStore1: 2877
+  X: 2560
+  PushCondition: 14324
+  PopCondition: 14324
+

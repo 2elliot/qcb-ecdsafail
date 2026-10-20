@@ -1,0 +1,10 @@
+env mirrored: TLM_TARGET_Q=1150 TLM_FOLD_CHUNK_ZERO_CIN=1 TLM_FFG_MAX_G=47 TLM_APPLY_ADD_SKIP_LASTK=1 TLM_FOLD_TAIL_CINC=1 TLM_CODEC_DIAMOND_MCX=1 TLM_COORD_RSUB_FUSED=1 TLM_SQUARE_VENT_MARGIN=0 TLM_COORD_ADD3X_TRUNC=1 TLM_SQUARE_VENT_SHIFTED=1 TLM_SQUARE_PEAK_CAP=1150
+shots per circuit: 9024 (random dst, ox < p; same inputs for both circuits)
+add3x (shipped, classical 3*ox)    ops=  41995 qubits= 770 CCX+CCZ emitted=  334 avg executed Toffoli=  321.528 | mismatches=0 phase-bad batches=0 ancilla-bad batches=0 (n=9024)
+add3x_orig (quantum-compatible)    ops=  12409 qubits= 771 CCX+CCZ emitted=  786 avg executed Toffoli=  754.965 | mismatches=0 phase-bad batches=0 ancilla-bad batches=0 (n=9024)
+delta (orig - shipped) avg executed Toffoli: +433.436
+### run meta
+﻿exit_code= seconds=1 peak_ws_mb=4 killed_over_limit=False
+### built from: scratch extraction of 60d61859 + src/bin/qcb_add3x.rs copied from qcb_audit/add3x_bench/qcb_add3x.rs (sha256 below)
+8f52be54c3df8dddfa82e084a93a7a187203f752c196ed0391a7af007a1e165c
+8f52be54c3df8dddfa82e084a93a7a187203f752c196ed0391a7af007a1e165c

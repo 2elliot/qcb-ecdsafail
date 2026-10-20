@@ -1,0 +1,46 @@
+### build_circuit stdout
+=== quantum_ecc: build_circuit (untrusted stage) ===
+
+-- building circuit --
+  emitted ops : 13586833
+  wrote       : ops.bin (52675661 bytes on disk, 760862664 uncompressed, 14.4x)
+
+=== build_circuit OK ===
+### build_circuit stderr
+### build_circuit run meta
+﻿exit_code= seconds=4 peak_ws_mb=737 killed_over_limit=False
+### eval_circuit (official scorer) stdout
+=== quantum_ecc: eval_circuit (trusted stage) ===
+
+  loaded ops  : 13586833
+  qubits      : 1321
+  bits        : 1010987
+
+-- correctness tests (9024 shots) --
+  tested shots            : 9024
+  classical mismatches    : 0
+  phase-garbage batches   : 0
+  ancilla-garbage batches : 0
+  all 9024 shots OK
+
+=== circuit metrics (secp256k1, n=256) ===
+  avg executed Toffoli  : 952707.477
+  avg executed Clifford : 11110672.321
+  total Toffoli (sum)   : 8597232271 over 9024 shots
+  total Clifford (sum)  : 100262707029
+  emitted ops           : 13586833
+  qubits                : 1321
+
+=== experiment OK ===
+### eval run meta
+﻿exit_code= seconds=34 peak_ws_mb=740 killed_over_limit=False
+### score.json
+{
+  "score": 1258525947,
+  "metrics": {
+    "toffoli": 952707,
+    "qubits": 1321
+  }
+}
+### sha256 ops.bin
+8d135db0aa0123fd143fc78ee1dbbe5fe6b851af9003352fde0f2fcc90458b34

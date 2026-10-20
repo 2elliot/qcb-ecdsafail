@@ -1,0 +1,13 @@
+# V4 top-3 promoted circuits: metadata from GitHub PR bodies (fetched 2026-10-19, read-only).
+# 'Current best score' lines are written by the Yukon bot into each PR body = the score of the
+# previous promotion. Claimed Q/T come from submitter notes (claims, not verified).
+PR#817 merged=True title='@jackylee0424 (claimed score: 939138168): Validate submission 54fc4f25-b48c-4155-9c58-83d6f5d71'
+    base=90e777ea82 current_best_at_submit=939169018 claimed_Q=1,234 claimed_T=761,052.442
+PR#818 merged=False title='@BitWonka: Validate submission e587fd65-24e0-456f-ac16-47e706cdb18f'
+    base=90e777ea82 current_best_at_submit=939169018 claimed_Q=? claimed_T=?
+PR#814 merged=True title='@MonitSharma (claimed score: 939169018): Validate submission d9ae2845-b2d8-4535-8a54-6a9803fdfb'
+    base=0c3a0751ab current_best_at_submit=939192464 claimed_Q=1,234 claimed_T=761,096.082
+PR#718 merged=True title='@jackylee0424 (claimed score: 939192464): Validate submission 9dc3798c-93e0-4da4-a6a9-37586737c'
+    base=0ae6d109be current_best_at_submit=939223314 claimed_Q=1,234 claimed_T=761,096.082
+PR#714 merged=True title='@MonitSharma (claimed score: 939223314): Validate submission d7f69382-4716-4b86-9fac-151c8bc581'
+    base=4b2ec52fc5 current_best_at_submit=939347948 claimed_Q=? claimed_T=?

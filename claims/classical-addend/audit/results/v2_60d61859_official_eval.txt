@@ -1,0 +1,55 @@
+### build_circuit stdout
+=== quantum_ecc: build_circuit (untrusted stage) ===
+
+-- building circuit --
+  emitted ops : 9133449
+  wrote       : ops.bin (29968460 bytes on disk, 511473160 uncompressed, 17.1x)
+
+=== build_circuit OK ===
+### build_circuit stderr
+CONSTPROP iter=1 ccx_total=1365127 dropped=364 folded_cx=23 folded_x=0 inverse_pairs=25 aff_drop=9 aff_fold=1 (this-iter toffoli removed = 447)
+CONSTPROP iter=2 ccx_total=1364680 dropped=3 folded_cx=0 folded_x=0 inverse_pairs=0 aff_drop=0 aff_fold=0 (this-iter toffoli removed = 3)
+CONSTPROP iter=3 ccx_total=1364677 dropped=0 folded_cx=0 folded_x=0 inverse_pairs=0 aff_drop=0 aff_fold=0 (this-iter toffoli removed = 0)
+CONSTPROP TOTAL iters=3 dropped=367 folded_cx=23 folded_x=0 inverse_pairs=25 aff_drop=9 aff_fold=1 (toffoli removed = 450)
+SINGLE_CCX_FANOUT: STOP passes=28 input_ops=9143155 output_ops=9143127 reason=no target-fanout conjugation found
+SINGLE_CCX_FANOUT: SUMMARY input_ops=9143155 output_ops=9143127 passes=28
+  [M-60] disabled -> emitting C1 (unfiltered)
+  [W018 CCZ straddle] total_ccz=5588 same_triple_candidates=0 cancelled_pairs=0 removed_ccz=0 -> 9143127 ops
+[deep-strip-identity] removed 9678 / 9678 dead; downgraded 2243 / 2243 to CX/CZ; 0 stale keys skipped
+### build_circuit run meta
+﻿exit_code= seconds=23 peak_ws_mb=1467 killed_over_limit=False
+### eval_circuit (official scorer) stdout
+=== quantum_ecc: eval_circuit (trusted stage) ===
+
+  loaded ops  : 9133449
+  qubits      : 1151
+  bits        : 525426
+
+-- correctness tests (9024 shots) --
+  tested shots            : 9024
+  classical mismatches    : 0
+  phase-garbage batches   : 0
+  ancilla-garbage batches : 0
+  all 9024 shots OK
+
+=== circuit metrics (secp256k1, n=256) ===
+  avg executed Toffoli  : 1299452.699
+  avg executed Clifford : 5346876.767
+  total Toffoli (sum)   : 11726261153 over 9024 shots
+  total Clifford (sum)  : 48250215942
+  emitted ops           : 9133449
+  qubits                : 1151
+
+=== experiment OK ===
+### eval run meta
+﻿exit_code= seconds=26 peak_ws_mb=498 killed_over_limit=False
+### score.json
+{
+  "score": 1495670403,
+  "metrics": {
+    "toffoli": 1299453,
+    "qubits": 1151
+  }
+}
+### sha256 ops.bin
+2e352317d264504ebecb4513239b4171f06b263f9a19c73824a8f6f2c23b3141

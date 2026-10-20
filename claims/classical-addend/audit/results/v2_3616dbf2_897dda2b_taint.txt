@@ -1,0 +1,50 @@
+ops.bin             : ops.bin
+ops                 : 13586833
+qubits (Q)          : 1321
+classical bits      : 1010987
+
+== static ==
+CCX / CCZ emitted   : 1009049 / 28
+  CCX+CCZ cond class unconditioned-or-const  : 896358
+  CCX+CCZ cond class OFF                     : 0
+  CCX+CCZ cond class MEAS                    : 112719
+  CCX+CCZ cond class OFF+MEAS                : 0
+  CCX+CCZ with ctrl classical-OFF           : 5
+  CCX+CCZ with ctrl classical-const         : 17
+  CCX+CCZ with ctrl classical-MEAS          : 0
+offset-conditioned X ops (A load/unload) : 2560
+OFF-dependent classical bit/push ops     : 23397
+non-register bits OFF-tainted at end     : 0
+
+== dynamic (official inputs, cross-checked vs quantum_ecc::sim::Simulator every batch) ==
+shots n             : 9024
+classical mismatches / phase-garbage batches / ancilla-garbage batches : 0 / 0 / 0
+avg executed Toffoli T : 952707.477
+  executed, cond class unconditioned-or-const  : 896358.000
+  executed, cond class OFF                     : 0.000
+  executed, cond class MEAS                    : 56349.477
+  executed, cond class OFF+MEAS                : 0.000
+  executed, ctrl classical-OFF              : 5.000
+  executed, ctrl classical-const            : 17.000
+  executed, ctrl classical-MEAS             : 0.000
+
+== A load/unload runs (offset-conditioned X) and the arithmetic between them ==
+ run       start         end  X ops | CCX+CCZ before avg exec before
+   0           1         766    256 |              0            0.0
+   1        5585        6350    256 |            332          319.9
+   2        6609        7374    256 |              0            0.0
+   3       12193       12958    256 |            332          320.0
+   4     6331433     6332198    256 |         473984       445895.4
+   5     6336361     6337126    256 |            332          320.1
+   6    13568159    13568924    256 |         533433       505212.1
+   7    13573743    13574508    256 |            332          319.9
+   8    13579138    13579903    256 |              0            0.0
+   9    13584430    13585195    256 |            332          320.1
+tail    13585196    13586833        |              0            0.0
+
+== CCX/CCZ with a classical-known OFF control (first 50) ==
+op      1535 CCX c1=q512 c2=q0 t=q770 cond_class=0 before_run=1 avg_exec=1.000
+op      8143 CCX c1=q767 c2=q256 t=q770 cond_class=0 before_run=3 avg_exec=1.000
+op   6332711 CCX c1=q770 c2=q0 t=q512 cond_class=0 before_run=5 avg_exec=1.000
+op  13569693 CCX c1=q771 c2=q256 t=q516 cond_class=0 before_run=7 avg_exec=1.000
+op  13580672 CCX c1=q644 c2=q0 t=q516 cond_class=0 before_run=9 avg_exec=1.000

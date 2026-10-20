@@ -1,0 +1,21 @@
+# Lowest-Q submissions landed on main, from GitHub metadata (read-only, unauthenticated REST API, 2026-10-19)
+# Source of Q/T/S: yukon-autoresearch[bot] 'Scored' comment on each Validate PR = the CI benchmark run. Not re-run here.
+# 207 of 635 landed submissions have a PR; the 428 pre-August 'Accept submission' commits have no PR and no recorded metrics.
+# Bot comments fetched for 50 PRs (all with first-claimed Q <= 1175 or no parseable claim, up to the rate limit); 25 more (PRs 477-499, 542, 549, 661) not fetched: their titles claim Q 1170-1174, 1236-1237, or none (661).
+
+bot-scored: 50 of 50 fetched
+Q=1150 T=1,284,776 S=1,477,492,400 PR#53 main=31f9c58ce9 2026-08-20 uuid=3493c837-5e3f-403c-bae7-1cd5467ab719 | Scored **1477492400** — improves the current best **1477992651**; merged when promotion lands.
+Q=1153 T=1,281,867 S=1,477,992,651 PR#52 main=0422437369 2026-08-19 uuid=b87bdf71-f9d4-43b2-b31c-6b9652b7946c | Scored **1477992651** — improves the current best **1480849785**; merged when promotion lands.
+Q=1153 T=1,284,345 S=1,480,849,785 PR#51 main=afcc72ef9d 2026-08-18 uuid=cb4540c2-f6cf-4dd8-89d0-408748e399ce | Scored **1480849785** — improves the current best **1481090914**; merged when promotion lands.
+Q=1154 T=1,283,441 S=1,481,090,914 PR#50 main=ebdbaac41f 2026-08-17 uuid=6af22f91-0071-4ebc-9a2f-d49af5eba8ca | Scored **1481090914** — improves the current best **1481141690**; merged when promotion lands.
+Q=1154 T=1,283,485 S=1,481,141,690 PR#48 main=9b2ce61c97 2026-08-17 uuid=6f8aba78-caf3-4d21-8dc4-0ffd44c2b65f | Scored **1481141690** — improves the current best **1481143998**; merged when promotion lands.
+Q=1154 T=1,283,487 S=1,481,143,998 PR#47 main=f735fd7120 2026-08-16 uuid=92809b4b-f8a4-462b-a076-66e084b3d4a0 | Scored **1481143998** — improves the current best **1481490198**; merged when promotion lands.
+Q=1154 T=1,283,787 S=1,481,490,198 PR#45 main=8e62c01972 2026-08-13 uuid=b18c1973-6799-4634-ab15-a78684fddc9c | Scored **1481490198** — improves the current best **1481887174**; merged when promotion lands.
+Q=1154 T=1,284,131 S=1,481,887,174 PR#42 main=9aceb7dace 2026-08-12 uuid=4bad3768-a0a3-42f4-9810-dd27d27d4a26 | Scored **1481887174** — improves the current best **1481905638**; merged when promotion lands.
+Q=1154 T=1,284,147 S=1,481,905,638 PR#41 main=474c29a9d0 2026-08-12 uuid=e109a080-d63a-4d76-abf4-f9b525d2dde1 | Scored **1481905638** — improves the current best **1482397242**; merged when promotion lands.
+Q=1154 T=1,284,573 S=1,482,397,242 PR#40 main=2dabd9d70c 2026-08-11 uuid=bb54b65a-add5-4fe8-bf7e-ebfe9bdd7496 | Scored **1482397242** — improves the current best **1482776908**; merged when promotion lands.
+Q=1154 T=1,284,902 S=1,482,776,908 PR#39 main=16351d8933 2026-08-11 uuid=df11ac0c-18e0-4ea6-880c-e3e75da07b92 | Scored **1482776908** — improves the current best **1482793064**; merged when promotion lands.
+Q=1154 T=1,284,916 S=1,482,793,064 PR#38 main=892b03b010 2026-08-10 uuid=0c7f6650-6cba-4810-aa4a-ff1c5ed985b1 | Scored **1482793064** — improves the current best **1483649332**; merged when promotion lands.
+no bot score: []
+
+# Cross-checks: PR#56 (3616dbf2) bot = Q 1321, T 952707, S 1258525947 = this audit's measurement (V2). PR#113 bot = Q 1278, T 918358.

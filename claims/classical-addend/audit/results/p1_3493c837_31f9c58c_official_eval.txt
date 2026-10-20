@@ -1,0 +1,56 @@
+### build_circuit stdout
+=== quantum_ecc: build_circuit (untrusted stage) ===
+
+-- building circuit --
+  emitted ops : 9018685
+  wrote       : ops.bin (30947929 bytes on disk, 505046376 uncompressed, 16.3x)
+
+=== build_circuit OK ===
+### build_circuit stderr
+CONSTPROP iter=1 ccx_total=1352408 dropped=76 folded_cx=21 folded_x=0 inverse_pairs=31 aff_drop=7 aff_fold=39 (this-iter toffoli removed = 205)
+CONSTPROP iter=2 ccx_total=1352203 dropped=3 folded_cx=0 folded_x=0 inverse_pairs=0 aff_drop=0 aff_fold=0 (this-iter toffoli removed = 3)
+CONSTPROP iter=3 ccx_total=1352200 dropped=0 folded_cx=0 folded_x=0 inverse_pairs=0 aff_drop=0 aff_fold=0 (this-iter toffoli removed = 0)
+CONSTPROP TOTAL iters=3 dropped=79 folded_cx=21 folded_x=0 inverse_pairs=31 aff_drop=7 aff_fold=39 (toffoli removed = 208)
+SINGLE_CCX_FANOUT: STOP passes=27 input_ops=9031835 output_ops=9031808 reason=no target-fanout conjugation found
+SINGLE_CCX_FANOUT: SUMMARY input_ops=9031835 output_ops=9031808 passes=27
+  [M-60] disabled -> emitting C1 (unfiltered)
+  [W018 CCZ straddle] total_ccz=5274 same_triple_candidates=0 cancelled_pairs=0 removed_ccz=0 -> 9031808 ops
+[affine-bridges] bridge1 at 4987686 (7->3) wires A=511 B=1094 T=730 X=901 Y=729; bridge2: no window (0 matches, skipped)
+[q1150-source-rebound] applied 16850 pinned actions: 9031804 -> 9018685 ops
+### build_circuit run meta
+﻿exit_code= seconds=21 peak_ws_mb=1442 killed_over_limit=False
+### eval_circuit (official scorer) stdout
+=== quantum_ecc: eval_circuit (trusted stage) ===
+
+  loaded ops  : 9018685
+  qubits      : 1150
+  bits        : 518531
+
+-- correctness tests (9024 shots) --
+  tested shots            : 9024
+  classical mismatches    : 0
+  phase-garbage batches   : 0
+  ancilla-garbage batches : 0
+  all 9024 shots OK
+
+=== circuit metrics (secp256k1, n=256) ===
+  avg executed Toffoli  : 1284776.069
+  avg executed Clifford : 5304977.072
+  total Toffoli (sum)   : 11593819243 over 9024 shots
+  total Clifford (sum)  : 47872113100
+  emitted ops           : 9018685
+  qubits                : 1150
+
+=== experiment OK ===
+### eval run meta
+﻿exit_code= seconds=25 peak_ws_mb=492 killed_over_limit=False
+### score.json
+{
+  "score": 1477492400,
+  "metrics": {
+    "toffoli": 1284776,
+    "qubits": 1150
+  }
+}
+### sha256 ops.bin
+c5222df8381677ca5f61c2089490bc91f4c8494160cbdd5e18661d909ebc195d
