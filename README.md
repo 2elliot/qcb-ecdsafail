@@ -18,7 +18,9 @@ Each week the team posts **verified claims** in Discord: an exploit in the curre
 │       └── audit/
 │           ├── audit_report.md   full Claude Code audit (V1–V4, follow-ups, critique)
 │           ├── agent_brief.md    the CLAUDE.md brief the audit ran under
-│           └── taint_count/      placeholder: copy the instrument here from your local clone
+│           ├── add3x_bench/      source of the +433.4 T measurement (qcb_add3x.rs)
+│           ├── results/          raw outputs of every audit run (11 .txt files)
+│           └── taint_count/      the audit instrument (builds only inside a challenge clone)
 ├── replies/
 │   ├── fiat-shamir/              reply to "Eliminating Fiat-Shamir tail-nonce grinding"
 │   │   ├── reply_v0.2.md
