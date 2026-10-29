@@ -13,7 +13,7 @@ Each week the team posts **verified claims** in Discord: an exploit in the curre
 ├── LOG.md                        week-by-week log of what was done and decided
 ├── claims/
 │   └── classical-addend/         my claim (week of 2026-10-19)
-│       ├── claim_v0.1.md         agent-readable claim doc
+│       ├── claim_v0.1.md         agent-readable claim doc (v0.2 is a Claude Doc; see links below)
 │       ├── discord_post.md       paste-ready Discord summary + thread title
 │       └── audit/
 │           ├── audit_report.md   full Claude Code audit (V1–V4, follow-ups, critique)
@@ -22,27 +22,32 @@ Each week the team posts **verified claims** in Discord: an exploit in the curre
 │           ├── results/          raw outputs of every audit run (11 .txt files)
 │           └── taint_count/      the audit instrument (builds only inside a challenge clone)
 ├── replies/
-│   ├── fiat-shamir/              reply to "Eliminating Fiat-Shamir tail-nonce grinding"
+│   ├── fiat-shamir/              posted reply to "Eliminating Fiat-Shamir tail-nonce grinding"
 │   │   ├── reply_v0.2.md
 │   │   └── discord_post.md       full reply + follow-up text
-│   └── track-g/                  reply to the modulus-specialization / Track G thread
-│       ├── reply_v0.2.md
-│       └── discord_post.md
+│   ├── track-g/                  posted reply to the modulus-specialization / Track G thread
+│   │   ├── reply_v0.2.md
+│   │   └── discord_post.md
+│   └── drafts/                   unposted replies (held until threads settle)
+│       ├── README.md             status table + positions held across all threads
+│       └── *.md                  one draft per pending reply (P003, Track Q, R003, Track G synthesis, R002, assurance architecture)
 ├── context/
-│   └── teammate-claims/          teammates' agent docs this work responds to (read-only)
+│   └── teammate-claims/          teammates' agent docs this work responds to (read-only), plus summaries.md
 └── notes/
     ├── research-notes.md         durable facts, numbers, formulas, sources
-    └── next-steps.md             follow-ups, open questions, candidate future claims
+    ├── verified-claims-catalogue-2026-10-29.md  every thread, message and attachment in #verified-claims
+    └── next-steps.md             follow-ups (item 0: zero-cost public-corpus demo), open questions, future claims
 ```
 
-## Status (as of 2026-10-19)
+## Status (as of 2026-10-29)
 
 | Item | Status |
 | --- | --- |
-| Claim: classical-addend surface (restrict offset bits to loads) | v0.1 drafted, backed by the audit |
-| Reply: Fiat-Shamir thread | v0.2 (F4 corrected after the audit) |
-| Reply: Track G thread | v0.2 (audit evidence added) |
-| Open measurements | Leader's k and division-seam width (AT2/AT3), incumbent fresh-input failure rate; see `notes/next-steps.md` |
+| Claim: classical-addend surface | v0.1 posted. v0.2 (quantum boundary, charged lookups; responds to Track Q) drafted as a Claude Doc |
+| Reply: Fiat-Shamir thread | v0.2 posted |
+| Reply: Track G thread | v0.2 posted |
+| Replies to new posts | P003 reply posted Oct 20; five drafts in `replies/drafts/` held. Also unanswered: C-AMP, C-03, and Aodhfionn's two replies (see the catalogue) |
+| Biggest open item | Zero-cost public-corpus demo (`notes/next-steps.md` item 0) |
 
 ## Conventions
 
@@ -51,6 +56,7 @@ Each week the team posts **verified claims** in Discord: an exploit in the curre
 - **Versions** live in filenames (`claim_v0.1.md`, `reply_v0.2.md`). Post a new version rather than silently editing a posted one.
 - **Safety.** Contestant code is untrusted. Build and run it only in a sandbox (WSL2, a container or a VM). Identify circuits from metadata (`results.tsv`, PR bodies) before building anything.
 - **Teammates' files** in `context/` are kept as received. Don't edit them; respond in your own files.
+- **Consistency.** Before posting a reply, check it against the positions list in `replies/drafts/README.md`.
 
 ## Working with agents
 
@@ -61,9 +67,11 @@ Each week the team posts **verified claims** in Discord: an exploit in the curre
 
 ## Editable originals
 
-The three docs were written as Claude Docs, the editable originals. The `.md` files here are snapshots. If you edit a doc, re-export it (doc name → Export → Markdown) and replace the file.
+These docs were written as Claude Docs, the editable originals. The `.md` files here are snapshots; after editing a doc, re-export it (doc name → Export → Markdown) and replace the file.
 
-- Claim: https://claude.ai/code/artifact/fe764c76-42c7-4b9c-8bc1-89a4296a7c92
+- Claim v0.1: https://claude.ai/code/artifact/fe764c76-42c7-4b9c-8bc1-89a4296a7c92
+- Claim v0.2 (not yet exported or posted): https://claude.ai/artifact/WMMnkjnNxDvg9L96cjvQUV
+- Reply to Track Q (not yet exported or posted): https://claude.ai/artifact/1EbBt5SawK6wK6npcmK9ba
 - Fiat-Shamir reply: https://claude.ai/code/artifact/1ae632bf-60d2-4074-ad63-9216cd1e1934
 - Track G reply: https://claude.ai/code/artifact/51966fa1-a181-47f7-9e1d-483ac0935f40
 
