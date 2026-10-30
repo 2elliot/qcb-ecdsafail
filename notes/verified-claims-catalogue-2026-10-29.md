@@ -2,7 +2,7 @@
 
 This catalogue was read directly from Discord: every message in all six threads, plus inline previews of every attachment. Nothing was posted or downloaded. It records what is there; it makes no new claims.
 
-**"In repo"** means the attachment is already in `context/teammate-claims/` or our own folders, with matching sizes. **"Captured"** means the text was taken from Discord's preview. Captures marked *partial* have gaps; download the original to replace them.
+**"In repo"** means the attachment is already in `context/teammate-claims/` or our own folders, with matching sizes. **"Captured"** means the text was taken from Discord's preview. Updated 2026-10-30: the three attachments first captured partially (C-AMP, C-03, Antigravity report) are now in the repo as the originals.
 
 ## Thread index
 
@@ -116,7 +116,7 @@ Our posted summary still contains the original bullet "Pillar 3 already exists i
 |---|---|---|---|
 | Oct 22, 6:09 PM | Aodhfionn Downs | Problem / how we checked / leader audit | — |
 | Oct 22, 6:09 PM | Aodhfionn Downs | Fix and sources (Gidney, *Approximate encoded permutations and piecewise quantum adders*; ECDSA.Fail paper; PostQuantum summary) | — |
-| Oct 22, 6:10 PM | Aodhfionn Downs | C-AMP agent doc | `C-AMP_error_pricing_amplitude__AGENT.md` (17 KB): **captured, partial** |
+| Oct 22, 6:10 PM | Aodhfionn Downs | C-AMP agent doc | `C-AMP_error_pricing_amplitude__AGENT.md` (17 KB), **original in repo** |
 
 The doc names its targets: P003, Elliot's reply to P003, joel's Track G synthesis, C-MOD F8, R002, and the paper's Q×T/p̂. Its content matches the P003 reply above, at more length:
 
@@ -124,7 +124,20 @@ The doc names its targets: P003, Elliot's reply to P003, joel's Track G synthesi
 - **Derivation (A.1–A.4).** It positions Gidney's bounds (overlap ≥ 1 − 2ε, trace distance ≤ 2√ε) as consistent with C1 and looser.
 - **Formula check** at N = 11, a sweep at N = 101, and a size sweep (N = 31 to 199): no size gives r near 1.
 - **Leader audit.** Same numbers as the P003 reply: runs A/B 133/123 wrong and 23/23 phase; average executed T 743,567 / 743,570 against 743,575 official.
-- **Requirements R1–R3.** R1 notes that the current `eval_circuit.rs` counts phase and ancilla failures only per 64-shot batch.
+- **Requirements.**
+    - R1 (MUST): classify each shot W, A, P or OK. The current `eval_circuit.rs` counts phase and ancilla failures only per 64-shot batch.
+    - R2 (MUST): Clopper–Pearson bounds on inputs independent of the op stream.
+    - R3 (MUST): Score = round(T̄·Q / P_run), replacing P003's (1 − ε)^(−k) and the Track G synthesis's ((1 − ε_0)/(1 − ε_UB))^K.
+    - R4 (MUST): 90% gate ε_W + ε_A + 2ε_P ≤ 0.188%.
+    - R5 (SHOULD): keep reporting the classical score during transition.
+    - R6 (SHOULD): count detected dirty resets as class P, or as class A under Mike's deterministic flag.
+- **Verification tasks V1–V6.**
+    - V4 audits the leader at 72ccdb8 with `audit_eval.rs`, using inputs from `Shake256("independent-audit-v1:" + seed)` and per-batch measurement streams.
+    - V5 tries to falsify the derivation.
+    - V6 adds a reset kind to the toy: r = 1.77 ± 0.11, about half the phase value, as A.3 predicts.
+- **Appendix: checked and found not to be exploits.**
+    - **Measurement feedforward depth.** HEAD issues 528,451 HMR measurements, whose outcomes condition 64,218 Toffolis, 742,154 CX and 600,187 CZ. Toffoli-only reaction depth is 702,840. Forcing conditioned Cliffords to wait gives 1.64×; a lazy Clifford-frame schedule gives 1.006× (lower bound 706,595). The July leader gives 1.022× and the baseline 1.000×. Conclusion: feedforward does not hide a meaningful time cost.
+    - **Stream-bound edit tables.** HEAD applies two edit tables bound by SHA3 to the exact upstream stream (`frozen_stack.rs` prefix table, `micro_compose.txt`). Relabeling two ancillas stops the build at the hash assertion. Skipping both tables costs about 78 Toffoli ops (~0.01%). The relabeled circuit fails official validation (21 mismatches, 11 phase-garbage batches), which is the nonce issue already covered by C-TAIL and R002.
 
 The doc says its scripts are attached, but only the `.md` is visible in the thread.
 
@@ -133,8 +146,8 @@ The doc says its scripts are attached, but only the `.md` is visible in the thre
 | When | Who | What | Attachment |
 |---|---|---|---|
 | Oct 22, 10:49 PM | Jack | Claim post (problem, demonstrated primitive, unresolved, why it matters, fix) | — |
-| Oct 22, 10:49 PM | Jack | "addtl info" | `C-03-measurement-outcome-grinding.md` (14 KB): **captured, partial** |
-| Oct 23, 12:08 PM | Yara Abu Saude | Reply (below) | `Antigravity Technical Agent Report.txt` (7 KB): **captured, partial** |
+| Oct 22, 10:49 PM | Jack | "addtl info" | `C-03-measurement-outcome-grinding.md` (14 KB), **original in repo** |
+| Oct 23, 12:08 PM | Yara Abu Saude | Reply (below) | `Antigravity Technical Agent Report.txt` (7 KB), **original in repo** as `Antigravity_Technical_Agent_Report.txt` |
 
 **Claim.**
 - **Mechanism.** The simulator continues the input XOF, and R/HMR consume 8 bytes each. Inserted clean resets shift later draws. Under a fixed public outcome sequence, padding can change whether a later dirty reset records a phase failure.
@@ -146,12 +159,19 @@ The doc says its scripts are attached, but only the `.md` is visible in the thre
   - Outcomes come from an independent evaluator secret, indexed by logical trial, static HMR ordinal and repetition; padding must not advance a cursor.
   - Validate the corrected logical channel, with four outcome streams (one primary, three diagnostic).
 
-**C-03 doc.** Finding C-03, revision 2.1, P0, distribution private, acceptance tests NOT_RUN. It has nine sections (summary, scope, architecture, invariants, reference algorithm, fixtures, operational impact, checklist, evidence limits). Notable content:
-- an outcome bit derived by HMAC-SHA256 over a per-repetition seed, logical input index and HMR ordinal;
-- a reset contract: q & live_mask & active_condition must be 0 before R;
-- the corrected-branch condition K_m = c_m(O)·U_O;
-- an evidence-limits note: survival is (1 − d)^m, and 2^−m is an upper bound only if d ≥ ½;
-- the inspected sources match historical pin `0ae6d109…`.
+**C-03 doc.** Finding C-03, revision 2.1, P0, catalog severity High, distribution private, acceptance tests NOT_RUN. Notable content:
+- **Outcome seeds and bits.**
+    - Per-repetition seed: HMAC-SHA256(outcome_master_key, LP("ecdsa-v2/outcome/v1") ‖ LP(epoch_id) ‖ U64BE(job_index) ‖ U64BE(r)).
+    - Outcome bit: lowbit(first_byte(HMAC-SHA256(seed_r, LP("ecdsa-v2/outcome-bit/v1") ‖ U64BE(i) ‖ U64BE(e)))), for logical trial i and static HMR ordinal e.
+- **Reset contract:** q & live_mask & active_condition == 0 before R.
+- **Corrected branches:** K_m = c_m(O)·U_O with Σ|c_m|² = 1. Input-independent branch-global signs are allowed.
+- **Sampling.** Four trajectories per input (one primary, three diagnostic), with the denominator staying 100,000 independent primary draws.
+- **Gadgets.** The positive gadget is `CX q0 q1; HMR q1 b0; Z q0 if b0`. Omitting the Z must fail on coherent inputs; global or outcome-conditioned Neg must pass.
+- **Acceptance tests** (all NOT_RUN):
+    - AT-C03-01: dirty vs clean reset under masks plus padding;
+    - AT-C03-02: input and outcome entropy independence;
+    - AT-C03-03: bounded coherent oracle on corrected, missing-correction and global-sign gadgets.
+- **Evidence limits.** Survival is (1 − d)^m, and 2^−m is an upper bound only if d ≥ ½. The inspected sources match historical pin `0ae6d109…`; the shared contract is `acceptance-spec.md` (not attached).
 
 **Yara's reply.**
 - **Agrees with:** the mechanism is real.
@@ -159,11 +179,15 @@ The doc says its scripts are attached, but only the `.md` is visible in the thre
 - **On the fix:** clean-R-zero-entropy plus dirty-R-reject "completely closes" the loophole; the indexed secret and multi-stream checker are "over-engineered".
 
 **Antigravity report.**
-- verifies the XOF continuation, clean-reset and dirty-reset behaviour with citations (`eval_circuit.rs:204-218, 248-254, 273`; `sim.rs:140-155`);
-- reproduces the primitive with a fixed seed;
-- calls the Fiat-Shamir binding a fatal gap in the claim;
-- rates "dirty R hard-rejecting before erasure" the optimal fix;
-- flags the 11.43 figure as not verifiable in its repo.
+- **Verified mechanism.** XOF continuation, clean resets (advance the cursor 8 bytes, no phase), and dirty-reset phase scrambling, with citations (`eval_circuit.rs:204-218, 248-254, 273, 313-324`; `sim.rs:140-155`).
+- **R/Hmr in use.** R and Hmr are allowed by `eval_circuit.rs:81-82` and are used by contestants; `src/point_add/y33_clears.rs:27` (`Y33_CLEARS = true`) converts clean-up Toffolis into Hmr measurements and phase twins.
+- **Primitive reproduced.** With a fixed seed, P = 0 → phase 1, P = 3 → 0, P = 5 → 0, P = 7 → 1, always with T = 0 and clean qubits. With Fiat-Shamir seeding, each P gives an independent trajectory.
+- **Critiques of the claim.**
+    - Fiat-Shamir binding makes padding reshuffle the inputs as well.
+    - The batch barrier: survival 2^−k for k dirty shots, about 2^−9024 across a full run.
+    - It confirms the README's forward-inverse check is absent from the evaluator, a separate gap.
+- **Assessment of the fix.** Clean R consuming zero entropy is "effective and minimal"; dirty R hard-reject is "optimal". The indexed secret is "over-engineered" for unitary arithmetic, and static HMR ordinals can still be permuted by inserting dummy HMRs without a dependency DAG or channel checker.
+- **Unverified.** The 11.43 figure is not found in its repo, and the "coherent" and "measurement" profiles don't exist in the harness.
 
 ## Facts that cut across threads
 

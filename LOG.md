@@ -39,4 +39,4 @@ The audit also found that the current top lineage has started conditioning arith
     - Aodhfionn opened C-AMP (error pricing off by 2× in the exponent, 4× for phase);
     - Jack opened C-03 (measurement-outcome steering), and Yara replied to it;
     - the leader moved to 72ccdb8 (923.5M).
-- **Repo additions.** Their agent docs are in `context/teammate-claims/`: two captured in full, three as partial captures to replace with the originals.
+- **Repo additions.** Their agent docs are in `context/teammate-claims/`: Aodhfionn's two replies captured in full from Discord; C-AMP, C-03 and the Antigravity report as the original files (uploaded Oct 30, replacing the partial captures).

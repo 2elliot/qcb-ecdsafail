@@ -1,0 +1,238 @@
+Technical Report for Agents
+1. Codebase Verification & Citations
+
+XOF Continuation & Entropy Consumption: Verified.
+
+In src/bin/eval_circuit.rs:204-218, fiat_shamir_seed(ops) initializes a single Shake256Reader.
+In src/bin/eval_circuit.rs:248-254, run_tests consumes 
+9024
+×
+64
+9024×64 bytes from this XOF to sample elliptic curve points targets and offsets.
+At src/bin/eval_circuit.rs:273, the exact same stream is passed by reference: Simulator::new(total_qubits as usize, num_bits as usize, &mut xof).
+In src/sim.rs:140-155, both OperationType::Hmr (lines 140–148) and OperationType::R (lines 149–155) unconditionally call self.xof.read(&mut buf) with [0u8; 8], consuming 8 bytes per executed operation per 64-shot batch.
+
+Clean Reset Behavior: Verified.
+
+In src/sim.rs:150-154, for a clean qubit where self.qubit(op.q_target) == 0: 
+phase
+←
+phase
+⊕
+(
+0
+∧
+rng_val
+∧
+cond
+)
+=
+phase
+phase←phase⊕(0∧rng_val∧cond)=phase The qubit remains 0, no phase kickback occurs, and self.stats.toffoli_gates is not incremented (only clifford_gates at src/sim.rs:91-94). However, the XOF stream cursor advances by 8 bytes.
+
+Dirty Reset Phase Scrambling: Verified.
+
+In src/sim.rs:153, if self.qubit(op.q_target) has a 1 on shot bit 
+𝑠
+s, self.phase bit 
+𝑠
+s is XORed with bit 
+𝑠
+s of rng_val.
+At src/bin/eval_circuit.rs:313-324, any batch where phase & cond_mask != 0 fails the test with "PHASE GARBAGE".
+
+Active Use of R / Hmr in the Repo:
+
+Contrary to the claim's mention of keeping R/Hmr rejected in a "coherent profile", src/bin/eval_circuit.rs:81-82 explicitly allows R and Hmr. Furthermore, the contestant circuit in src/point_add/y33_clears.rs:27 (Y33_CLEARS = true) actively sweeps the circuit to convert clean-up Toffolis into Hmr measurements and phase twins.
+2. Empirical Verification of the Steering Primitive
+
+A reproduction unit test was executed against quantum_ecc::sim::Simulator:
+
+Setup: 2 qubits (
+𝑞
+0
+=
+∣
+0
+⟩
+q
+0
+	​
+
+=∣0⟩, 
+𝑞
+1
+=
+∣
+1
+⟩
+q
+1
+	​
+
+=∣1⟩). 
+𝑃
+∈
+[
+0
+,
+15
+]
+P∈[0,15] clean resets R q0 followed by 1 dirty reset R q1.
+Case A (External Fixed Seed):
+When seeded with a fixed constant XOF, 
+𝑃
+=
+0
+P=0 produced phase = 1, 
+𝑃
+=
+3
+P=3 produced phase = 0, 
+𝑃
+=
+5
+P=5 produced phase = 0, and 
+𝑃
+=
+7
+P=7 produced phase = 1.
+For all 
+𝑃
+P, 
+𝑇
+=
+0
+T=0, 
+𝑞
+0
+=
+0
+q
+0
+	​
+
+=0, and 
+𝑞
+1
+=
+0
+q
+1
+	​
+
+=0.
+Result: Demonstrates that stream sliding exists at the raw simulator level under an uncoupled RNG.
+Case B (Harness Fiat-Shamir Seeding):
+When seeded via fiat_shamir_seed(&ops), each padding value 
+𝑃
+P produced a completely independent pseudorandom hash seed, changing the entire trajectory of subsequent draws.
+3. Strongest Critiques & Gaps in the Claim
+
+The Fiat-Shamir Binding Gap (Fatal Vulnerability in the Slack Claim):
+
+The author asserts: "Predictable measurement records remain selectable after inputs are fixed... A fixed public outcome sequence therefore still lets harmless padding change whether a later dirty reset produces a recorded phase failure."
+Critique: In this benchmark harness, inputs and measurement records are not fixed independently of the circuit ops.
+In src/bin/eval_circuit.rs:204-218, the seed is: 
+Seed
+=
+SHAKE256
+(
+"quantum_ecc-fiat-shamir-v2"
+∥
+∣
+ops
+∣
+∥
+ops
+[
+0
+]
+∥
+…
+∥
+ops
+[
+𝑛
+−
+1
+]
+)
+Seed=SHAKE256("quantum_ecc-fiat-shamir-v2"∥∣ops∣∥ops[0]∥…∥ops[n−1])
+Inserting even a single R operation alters ops.len() and appends 56 bytes to the preimage. Due to the avalanche effect of SHAKE256, modifying padding does not "slide a fixed public sequence"; it completely reshuffles the 9,024 test points 
+(
+𝑇
+,
+𝑂
+)
+(T,O) generated at lines 248–269. A contestant cannot target a known sequence of outcome draws without simultaneously changing the problem instances the circuit must solve.
+
+The 9,024-Shot Batch Barrier:
+
+In the real harness (src/bin/eval_circuit.rs:280-324), simulation is bit-sliced across 64 shots per batch over 141 batches (9,024 total shots).
+For an uncomputed dirty qubit to avoid a phase error in a batch, every shot bit where the qubit is dirty must match a 0 bit in rng_val.
+If a qubit is systematically uncomputed on 
+𝑘
+k shots, the survival probability is 
+2
+−
+𝑘
+2
+−k
+. For a full batch (
+𝑘
+=
+64
+k=64), 
+𝑝
+=
+2
+−
+64
+≈
+5.4
+×
+10
+−
+20
+p=2
+−64
+≈5.4×10
+−20
+. Across 141 batches, 
+𝑝
+≈
+2
+−
+9024
+p≈2
+−9024
+.
+Grinding Fiat-Shamir seeds to find an all-zero phase draw is computationally infeasible.
+
+Omission of the Forward-Inverse Check:
+
+The user prompt and README.md:57-59 mention a "forward-then-inverse check."
+Code inspection shows eval_circuit.rs never actually executes an inverse pass. It executes sim.apply_iter(ops.iter()) at line 295 once forward, checks classical outputs and ancilla zeros, and exits. The absence of the inverse check in the trusted evaluator is a genuine gap in the harness, but it is unrelated to the Slack claim's measurement-steering theory.
+4. Assessment of the Proposed Fix
+Clean R consuming 0 entropy: Effective and Minimal.
+If src/sim.rs:149-155 is updated so R does not draw from self.xof when qubit == 0, stream sliding is eliminated.
+Dirty R hard-rejecting before erasure: Optimal Fix.
+Rather than relying on randomized phase kickback (self.phase ^= qubit & rng_val), the simulator should immediately panic or return Err if (self.qubit(op.q_target) & cond) != 0 during an R operation. This turns probabilistic detection into deterministic rejection (
+𝑝
+detection
+=
+1.0
+p
+detection
+	​
+
+=1.0), making RNG manipulation completely moot.
+Indexed Evaluator Secret & Transcript Channel Checker: Over-engineered / Redundant for Unitary Arithmetic.
+Adding evaluator secrets indexed by (trial, hmr_ordinal, repetition) is standard for general quantum interactive proofs or dynamic circuits, but unnecessary here. If dirty resets deterministically reject upon non-zero qubit state, no entropy is needed for R at all.
+For Hmr, static ordinal indexing leaves a minor workaround: contestants can still reorder or insert dummy Hmr instructions to permute ordinals unless an explicit dependency DAG or channel checker is enforced.
+5. Unverified Items Flagged
+"11.43 phase-failing shots per 9,024":
+Could not be verified in this repository. Git history shows prior commits investigating Kaliski inversion phase bisection (src/point_add/kaliski_phase_bisect.rs), but no record or test logs contain the specific 11.43 average metric. This appears to refer to an upstream Google benchmark dataset or private Slack experiment.
+"Coherent profile" vs. "Measurement profile":
+These profiles do not exist in the repository's configuration flags or harness code; eval_circuit.rs currently implements a single validation mode.

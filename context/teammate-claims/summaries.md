@@ -85,7 +85,7 @@ Agent doc: `R_P003_amplitude_exponent__AGENT.md`.
 
 ## Aodhfionn Downs: C-AMP, "Error pricing undercharges approximate circuits by 2x in the exponent, and phase errors by 4x" (new thread, Oct 22)
 
-Agent doc: `C-AMP_error_pricing_amplitude__AGENT.partial.md` (partial capture).
+Agent doc: `C-AMP_error_pricing_amplitude__AGENT.md`.
 
 - **Problem.** P003, Elliot's reply, the Track G synthesis and the paper's Q×T/p̂ all price errors as independent coins. A coherent run gives (1 − ε)^(2k) for wrong or ancilla errors and (1 − 2ε)^(2k) for phase-only errors. The coin model overstates success, so it rewards adding error.
 - **Checked by exact simulation** of windowed discrete-log phase estimation (one million paths). The amplitude model reproduces phase errors exactly; the remaining gap for the other two shrinks as each failing input covers a smaller share of paths (≤ 2⁻³² in real secp256k1).
@@ -94,7 +94,7 @@ Agent doc: `C-AMP_error_pricing_amplitude__AGENT.partial.md` (partial capture).
 
 ## Jack: C-03, "Predictable measurement records remain selectable after inputs are fixed" (new thread, Oct 22)
 
-Agent doc: `C-03-measurement-outcome-grinding.partial.md` (partial capture).
+Agent doc: `C-03-measurement-outcome-grinding.md`.
 
 - **Problem.** The historical simulator continues the input XOF; each R or Hmr consumes eight bytes. An inserted reset of an already-zero scratch qubit shifts later draws, so with a fixed public outcome sequence, padding can change whether a later dirty reset records a phase failure.
 - **Demonstrated.** A two-qubit steering primitive: with one fixed seed, 0–15 inserted clean resets changed the final phase (padding 0 → phase 0, padding 2 → phase 1), with T = 0 and clean qubits. Not shown for a full adder or quantified for a frontier circuit.
@@ -107,7 +107,7 @@ Agent doc: `C-03-measurement-outcome-grinding.partial.md` (partial capture).
 
 ## Yara Abu Saude: reply to C-03 (Oct 23)
 
-Attachment: `Antigravity_Technical_Agent_Report.partial.md` (partial capture).
+Attachment: `Antigravity_Technical_Agent_Report.txt`.
 
 - **Agrees with:** the mechanism is real. Clean R and Hmr consume 8 bytes of the continued XOF, which can slide a later dirty reset's random phase kick under an artificially fixed seed.
 - **Disputes:** that it is an open exploit. In the actual harness the inputs and XOF are derived from a Fiat-Shamir hash of the entire op stream, so padding scrambles both; and evading detection across 9,024 shots (141 batches of 64) is statistically impossible (p ≤ 2^−k).

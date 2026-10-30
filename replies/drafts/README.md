@@ -48,9 +48,9 @@ These are recorded as information for crafting replies; no positions above have 
     - S_W "double-prices width";
     - independently raises offset-keyed patching of a fixed public corpus.
     - Relevant to `track_q.md` and to claim v0.2.
-- **Aodhfionn on P003, and his new thread C-AMP** (`R_P003_amplitude_exponent__AGENT.md`, `C-AMP_…partial.md`): the error-pricing exponent should be (1 − ε)^(2k) for wrong/ancilla and (1 − 2ε)^(2k) for phase, supported by exact simulation. He names our P003 reply among the targets.
+- **Aodhfionn on P003, and his new thread C-AMP** (`R_P003_amplitude_exponent__AGENT.md`, `C-AMP_error_pricing_amplitude__AGENT.md`): the error-pricing exponent should be (1 − ε)^(2k) for wrong/ancilla and (1 − 2ε)^(2k) for phase, supported by exact simulation. He names our P003 reply among the targets.
     - Bears on position 2 and on every draft that uses (1 − ε)^−k pricing: `r003_cmod.md`, `trackg_synthesis.md`, `r002_ctail.md`, `assurance_architecture.md`.
-- **Jack's new thread C-03 and Yara's reply** (`C-03-…partial.md`, `Antigravity_…partial.md`): R/HMR consume 8 XOF bytes each, so clean-reset padding can steer a dirty reset's recorded phase under a fixed seed. Yara argues the Fiat-Shamir binding prevents this in today's harness.
+- **Jack's new thread C-03 and Yara's reply** (`C-03-measurement-outcome-grinding.md`, `Antigravity_Technical_Agent_Report.txt`): R/HMR consume 8 XOF bytes each, so clean-reset padding can steer a dirty reset's recorded phase under a fixed seed. Yara argues the Fiat-Shamir binding prevents this in today's harness.
     - Relates to F6 of our Fiat-Shamir reply, and to R002's dirty-reset flagging.
 - **Not yet answered by us:** C-AMP, C-03, and Aodhfionn's two replies, in addition to the five unposted drafts.
 
